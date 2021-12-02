@@ -1,5 +1,3 @@
-use core::panic;
-
 pub fn main() {
     let result = super::DATA
         .lines()
