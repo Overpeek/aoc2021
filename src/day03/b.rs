@@ -1,11 +1,11 @@
 // lhs = o2
 // rhs = co2
-fn run(nums: &[u16], bit_i: usize) -> (Vec<u16>, Vec<u16>) {
+fn run(nums: &[usize], bit_i: usize) -> (Vec<usize>, Vec<usize>) {
     // lhs = 0 bit at bit_i
     // rhs = 1 bit at bit_i
     let (lhs, rhs) = nums
         .iter()
-        .partition::<Vec<u16>, _>(|num| (1 << bit_i) & *num == 0);
+        .partition::<Vec<_>, _>(|num| (1 << bit_i) & *num == 0);
 
     match lhs.len().cmp(&rhs.len()) {
         std::cmp::Ordering::Equal => (rhs, lhs),
@@ -16,9 +16,9 @@ fn run(nums: &[u16], bit_i: usize) -> (Vec<u16>, Vec<u16>) {
 
 pub fn main() {
     let bitlen = super::DATA.lines().next().unwrap().len();
-    let nums: Vec<u16> = super::DATA
+    let nums: Vec<_> = super::DATA
         .lines()
-        .map(|line| u16::from_str_radix(line, 2).unwrap())
+        .map(|line| usize::from_str_radix(line, 2).unwrap())
         .collect();
 
     let (mut o2, mut co2) = run(&nums, bitlen - 1);
@@ -30,10 +30,7 @@ pub fn main() {
             co2 = run(&co2, i).1;
         }
     }
-    let (o2, co2) = (
-        *o2.first().unwrap() as usize,
-        *co2.first().unwrap() as usize,
-    );
+    let (o2, co2) = (*o2.first().unwrap(), *co2.first().unwrap());
 
     println!("{} = {}", module_path!(), o2 * co2);
 }
